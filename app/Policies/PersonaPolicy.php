@@ -18,7 +18,7 @@ class PersonaPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
