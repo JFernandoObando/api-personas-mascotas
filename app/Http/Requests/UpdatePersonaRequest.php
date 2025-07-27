@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-
+use Illuminate\Validation\Rule;
 class UpdatePersonaRequest extends FormRequest
 {
     public function authorize(): bool
@@ -16,9 +16,13 @@ class UpdatePersonaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre'           => 'sometimes|required|string|max:255',
-            'email'            => 'sometimes|required|email|unique:personas,email,' . $this->route('persona'),
-            'fecha_nacimiento' => 'sometimes|required|date',
+            'nombre' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('personas', 'email')->ignore($this->route('persona')->id),
+            ],
+            'fecha_nacimiento' => 'required|date',
         ];
     }
 

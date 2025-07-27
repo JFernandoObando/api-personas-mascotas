@@ -242,16 +242,13 @@ Authorization: Bearer {token}
 **Body:**
 ```json
 {
-  "nombre": "Firulais",
+  "nombre": "AVE",
   "especie": "Perro",
   "raza": "Labrador",
   "edad": 4,
-  "imagen_url": "https://example.com/foto.jpg",
-  "temperamento": "Tranquilo",
-  "anios_vida": 12,
-  "descripcion": "Es muy juguetón.",
   "persona_id": 1
 }
+#Los otros campos se llenan consumiendo la API externa
 ```
 
 #### 📋 Listar mascotas
@@ -316,9 +313,3 @@ php artisan test                     # Ejecutar pruebas
 php artisan migrate:fresh --seed    # Resetear base de datos
 php artisan l5-swagger:generate     # Regenerar documentación
 ```
-
----
-
-## 📄 Licencia
-
-MIT License
