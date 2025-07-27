@@ -17,15 +17,57 @@ API RESTful desarrollada en Laravel con autenticación JWT, documentación Swagg
 ## 🚀 Instalación y ejecución
 
 ```bash
-git clone https://github.com/usuario/mi-api-mascotas.git
-cd mi-api-mascotas
+git clone https://github.com/JFernandoObando/api-personas-mascotas.git
+cd api-personas-mascotas
 
 composer install
 cp .env.example .env
 php artisan key:generate
 php artisan jwt:secret
 
-# Configura tu .env con las credenciales de base de datos
+---
+
+## 🐘 Crear la base de datos MySQL antes de configurar `.env`
+
+Antes de ejecutar las migraciones, asegúrate de crear una base de datos en tu servidor MySQL. Puedes hacerlo de varias maneras:
+
+### 🔧 Opción 1: Usando MySQL en consola
+
+1. Abre una terminal o consola MySQL:
+   ```bash
+   mysql -u root -p
+
+
+CREATE DATABASE PruebaMascota CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+EXIT;
+
+---
+
+## 🛠 Configura tu `.env` con las credenciales de base de datos
+
+Asegúrate de tener estas variables en tu archivo `.env` para que Laravel pueda conectarse correctamente a tu base de datos MySQL local.
+
+### 🧾 Ejemplo:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=PruebaMascota
+DB_USERNAME=root
+DB_PASSWORD=root
+
+---
+
+## ⚠️ IMPORTANTE
+
+Al final del archivo `.env`, **debes agregar** la siguiente variable de entorno para que la API externa TheDogAPI funcione correctamente:
+
+```env
+DOG_API_BASE_URL=https://api.thedogapi.com/v1
+
+
+--
 
 php artisan migrate --seed
 php artisan l5-swagger:generate
@@ -65,6 +107,22 @@ POST /api/login
 }
 ```
 
+
+### 🔐 Cómo usar el token JWT (Bearer Token)
+
+Este `token` debe enviarse en todas las peticiones protegidas dentro del encabezado `Authorization` con el prefijo `Bearer`:
+
+```
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
+```
+
+**Ejemplo con `curl`:**
+
+```bash
+curl -X GET http://localhost:8000/api/personas   -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhb..."
+```
+
+---
 ### 🔐 Registro
 
 ```http
@@ -81,16 +139,6 @@ POST /api/register
 }
 ```
 
----
-
-### 🔐 Perfil actual
-
-```http
-GET /api/me
-Authorization: Bearer {token}
-```
-
----
 
 ## 📚 Documentación Swagger
 
