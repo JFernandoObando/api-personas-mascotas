@@ -18,7 +18,7 @@ class PersonaPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -78,7 +78,7 @@ class PersonaPolicy
      */
     public function restore(User $user, Persona $persona)
     {
-        //
+        return true;
     }
 
     /**
@@ -90,6 +90,6 @@ class PersonaPolicy
      */
     public function forceDelete(User $user, Persona $persona)
     {
-        //
+        return true;
     }
 }
