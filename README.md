@@ -1,0 +1,276 @@
+# 🐾 API Personas y Mascotas
+
+API RESTful desarrollada en Laravel con autenticación JWT, documentación Swagger, arquitectura en capas (Service, Resource, Request), y pruebas de integración.
+
+---
+
+## ⚙️ Requisitos del sistema
+
+- PHP >= 8.1
+- Composer
+- Laravel >= 8.x
+- MySQL
+- Extensiones PHP: `openssl`, `pdo`, `mbstring`, `bcmath`, `xml`, `tokenizer`
+
+---
+
+## 🚀 Instalación y ejecución
+
+```bash
+git clone https://github.com/usuario/mi-api-mascotas.git
+cd mi-api-mascotas
+
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan jwt:secret
+
+# Configura tu .env con las credenciales de base de datos
+
+php artisan migrate --seed
+php artisan l5-swagger:generate
+
+php artisan serve
+```
+
+---
+
+## 🔐 Autenticación
+
+Usamos JWT (JSON Web Token).
+
+### 📥 Login
+
+```http
+POST /api/login
+```
+
+**Body:**
+```json
+{
+  "email": "admin@example.com",
+  "password": "admin1234"
+}
+```
+
+**Respuesta:**
+```json
+{
+  "message": "Inicio de sesión correcto",
+  "user": {
+    "name": "Admin",
+    "email": "admin@example.com"
+  },
+  "token": "eyJ0eXAiOiJKV1QiLCJhb..."
+}
+```
+
+### 🔐 Registro
+
+```http
+POST /api/register
+```
+
+**Body:**
+```json
+{
+  "name": "Nuevo Usuario",
+  "email": "nuevo@example.com",
+  "password": "password123",
+  "password_confirmation": "password123"
+}
+```
+
+---
+
+### 🔐 Perfil actual
+
+```http
+GET /api/me
+Authorization: Bearer {token}
+```
+
+---
+
+## 📚 Documentación Swagger
+
+Disponible en:
+
+```
+http://localhost:8000/api/documentation
+```
+
+---
+
+## 👤 Usuario de prueba
+
+```json
+{
+  "email": "admin@example.com",
+  "password": "admin1234"
+}
+```
+
+Creado automáticamente con los seeders.
+
+---
+
+## 📌 Endpoints y ejemplos
+
+### 🧑 Personas
+
+#### ➕ Crear persona
+
+```http
+POST /api/personas
+Authorization: Bearer {token}
+```
+
+**Body:**
+```json
+{
+  "nombre": "Juan Pérez",
+  "email": "juan@example.com",
+  "fecha_nacimiento": "1990-05-15",
+  "user_id": 1
+}
+```
+
+#### 📋 Listar personas
+
+```http
+GET /api/personas
+Authorization: Bearer {token}
+```
+
+#### 👁 Ver una persona
+
+```http
+GET /api/personas/{id}
+Authorization: Bearer {token}
+```
+
+#### ✏️ Actualizar persona
+
+```http
+PUT /api/personas/{id}
+Authorization: Bearer {token}
+```
+
+**Body:**
+```json
+{
+  "nombre": "Juan P. Actualizado",
+  "email": "juan_actualizado@example.com",
+  "fecha_nacimiento": "1985-10-10"
+}
+```
+
+#### ❌ Eliminar persona
+
+```http
+DELETE /api/personas/{id}
+Authorization: Bearer {token}
+```
+
+#### 🐾 Ver mascotas de una persona
+
+```http
+GET /api/personas/{id}/mascotas
+Authorization: Bearer {token}
+```
+
+---
+
+### 🐶 Mascotas
+
+#### ➕ Crear mascota
+
+```http
+POST /api/mascotas
+Authorization: Bearer {token}
+```
+
+**Body:**
+```json
+{
+  "nombre": "Firulais",
+  "especie": "Perro",
+  "raza": "Labrador",
+  "edad": 4,
+  "imagen_url": "https://example.com/foto.jpg",
+  "temperamento": "Tranquilo",
+  "anios_vida": 12,
+  "descripcion": "Es muy juguetón.",
+  "persona_id": 1
+}
+```
+
+#### 📋 Listar mascotas
+
+```http
+GET /api/mascotas
+Authorization: Bearer {token}
+```
+
+#### 👁 Ver mascota
+
+```http
+GET /api/mascotas/{id}
+Authorization: Bearer {token}
+```
+
+#### ✏️ Actualizar mascota
+
+```http
+PUT /api/mascotas/{id}
+Authorization: Bearer {token}
+```
+
+**Body:**
+```json
+{
+  "nombre": "Firulais Actualizado",
+  "especie": "Perro",
+  "raza": "Golden Retriever",
+  "edad": 5,
+  "imagen_url": "https://example.com/foto2.jpg",
+  "temperamento": "Juguetón",
+  "anios_vida": 13,
+  "descripcion": "Muy activo.",
+  "persona_id": 1
+}
+```
+
+#### ❌ Eliminar mascota
+
+```http
+DELETE /api/mascotas/{id}
+Authorization: Bearer {token}
+```
+
+---
+
+## 🧠 Consideraciones del desarrollador
+
+- Arquitectura limpia usando `Service`, `FormRequest`, `Resource`, `Policy`.
+- JWT Token guardado en la base (`users.jwt_token`).
+- Documentación generada con anotaciones Swagger `@OA`.
+- Pruebas en `tests/Feature/`.
+- SoftDeletes para registros.
+
+---
+
+## 🧪 Comandos útiles
+
+```bash
+php artisan test                     # Ejecutar pruebas
+php artisan migrate:fresh --seed    # Resetear base de datos
+php artisan l5-swagger:generate     # Regenerar documentación
+```
+
+---
+
+## 📄 Licencia
+
+MIT License

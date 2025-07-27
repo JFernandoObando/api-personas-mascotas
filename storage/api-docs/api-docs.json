@@ -1,0 +1,842 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Personas y Mascotas",
+        "description": "Documentación generada automáticamente con Swagger para la API de Personas y Mascotas.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "Servidor principal"
+        }
+    ],
+    "paths": {
+        "/api/mascotas": {
+            "get": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Listar mascotas paginadas",
+                "operationId": "c2ddd7cd4e31db63a0dd1748b34621bf",
+                "responses": {
+                    "200": {
+                        "description": "Listado de mascotas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Listado de mascotas"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Mascota"
+                                            }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Crear una nueva mascota",
+                "operationId": "f46ad61b36a26e3d1b607b1729e4e87e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "especie",
+                                    "persona_id"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "Firulais"
+                                    },
+                                    "especie": {
+                                        "type": "string",
+                                        "maxLength": 50,
+                                        "example": "Perro"
+                                    },
+                                    "raza": {
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "Labrador",
+                                        "nullable": true
+                                    },
+                                    "edad": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "example": 3,
+                                        "nullable": true
+                                    },
+                                    "imagen_url": {
+                                        "type": "string",
+                                        "example": "https://example.com/firulais.jpg"
+                                    },
+                                    "temperamento": {
+                                        "type": "string",
+                                        "example": "Tranquilo"
+                                    },
+                                    "anios_vida": {
+                                        "type": "integer",
+                                        "example": 12
+                                    },
+                                    "descripcion": {
+                                        "type": "string",
+                                        "example": "Mascota activa y amigable."
+                                    },
+                                    "persona_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Mascota creada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Mascota creada correctamente"
+                                        },
+                                        "mascota": {
+                                            "$ref": "#/components/schemas/Mascota"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error de validación"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/mascotas/{id}": {
+            "get": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Mostrar detalle de una mascota",
+                "operationId": "b3147fa1122effb85267796c20f2fffb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la mascota",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalle de la mascota",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Detalle de la mascota"
+                                        },
+                                        "mascota": {
+                                            "$ref": "#/components/schemas/Mascota"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mascota no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Actualizar una mascota",
+                "operationId": "0e978f965bf1aecb5d72fdba1f2315ee",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la mascota",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Max"
+                                    },
+                                    "especie": {
+                                        "type": "string",
+                                        "example": "Gato"
+                                    },
+                                    "raza": {
+                                        "type": "string",
+                                        "example": "Siames"
+                                    },
+                                    "edad": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "imagen_url": {
+                                        "type": "string",
+                                        "example": "https://example.com/max.jpg"
+                                    },
+                                    "temperamento": {
+                                        "type": "string",
+                                        "example": "Tímido"
+                                    },
+                                    "anios_vida": {
+                                        "type": "integer",
+                                        "example": 15
+                                    },
+                                    "descripcion": {
+                                        "type": "string",
+                                        "example": "Muy tranquilo."
+                                    },
+                                    "persona_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Mascota actualizada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Mascota actualizada correctamente"
+                                        },
+                                        "mascota": {
+                                            "$ref": "#/components/schemas/Mascota"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mascota no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Eliminar (soft delete) una mascota",
+                "operationId": "4e5d38cf4f008132175bc6a19691f91d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la mascota",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mascota eliminada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Mascota eliminada correctamente (soft delete)"
+                                        },
+                                        "mascota": {
+                                            "properties": {
+                                                "nombre": {
+                                                    "type": "string",
+                                                    "example": "Firulais"
+                                                },
+                                                "especie": {
+                                                    "type": "string",
+                                                    "example": "Perro"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mascota no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/personas": {
+            "get": {
+                "tags": [
+                    "Personas"
+                ],
+                "summary": "Listar personas paginadas",
+                "operationId": "8601618afc784c4736e52022f7f6f047",
+                "responses": {
+                    "200": {
+                        "description": "Listado de personas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Listado de personas"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Persona"
+                                            }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "total": {
+                                                    "type": "integer"
+                                                },
+                                                "current_page": {
+                                                    "type": "integer"
+                                                },
+                                                "last_page": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Personas"
+                ],
+                "summary": "Crear una nueva persona",
+                "operationId": "d016dca10e1a596471fe5aa5d4c99841",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "email",
+                                    "fecha_nacimiento",
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Ana López"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "ana@example.com"
+                                    },
+                                    "fecha_nacimiento": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1990-06-21"
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Persona creada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "persona": {
+                                            "$ref": "#/components/schemas/Persona"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/personas/{id}": {
+            "get": {
+                "tags": [
+                    "Personas"
+                ],
+                "summary": "Mostrar una persona por ID",
+                "operationId": "9b70ed1d108dd682ec86b7c48f328884",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalle de la persona",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "persona": {
+                                            "$ref": "#/components/schemas/Persona"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Personas"
+                ],
+                "summary": "Actualizar una persona",
+                "operationId": "2a6e07dc32d26f218b13c0a2dc442fdf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Ana López"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "ana@example.com"
+                                    },
+                                    "fecha_nacimiento": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1990-06-21"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Persona actualizada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "persona": {
+                                            "$ref": "#/components/schemas/Persona"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Personas"
+                ],
+                "summary": "Eliminar una persona",
+                "operationId": "8564ed4ed7e2d07b09bda4aac6184710",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Persona eliminada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Persona eliminada (soft delete)"
+                                        },
+                                        "persona": {
+                                            "properties": {
+                                                "nombre": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/personas/{id}/mascotas": {
+            "get": {
+                "tags": [
+                    "Personas"
+                ],
+                "summary": "Obtener persona junto con sus mascotas",
+                "operationId": "2639e2df20ca980031d3a98b1cc29155",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Persona con sus mascotas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Persona con sus mascotas"
+                                        },
+                                        "persona": {
+                                            "$ref": "#/components/schemas/Persona"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Mascota": {
+                "title": "Mascota",
+                "required": [
+                    "nombre",
+                    "especie",
+                    "persona_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "example": "Firulais"
+                    },
+                    "especie": {
+                        "type": "string",
+                        "example": "Perro"
+                    },
+                    "raza": {
+                        "type": "string",
+                        "example": "Labrador"
+                    },
+                    "edad": {
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "imagen_url": {
+                        "type": "string",
+                        "example": "https://example.com/firulais.jpg"
+                    },
+                    "temperamento": {
+                        "type": "string",
+                        "example": "Amigable"
+                    },
+                    "descripcion": {
+                        "type": "string",
+                        "example": "Muy juguetón y amigable"
+                    },
+                    "anios_vida": {
+                        "type": "integer",
+                        "example": 12
+                    },
+                    "persona_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Persona": {
+                "title": "Persona",
+                "required": [
+                    "nombre",
+                    "email",
+                    "fecha_nacimiento",
+                    "user_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "example": "Juan Pérez"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "juan@example.com"
+                    },
+                    "fecha_nacimiento": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "1990-05-15"
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Mascotas",
+            "description": "Operaciones relacionadas con mascotas"
+        },
+        {
+            "name": "Personas",
+            "description": "Operaciones relacionadas con personas"
+        }
+    ]
+}
