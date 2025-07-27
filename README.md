@@ -294,7 +294,7 @@ DELETE /api/mascotas/{id}
 Authorization: Bearer {token}
 ```
 
----
+--
 
 ## 🧠 Consideraciones del desarrollador
 
@@ -303,9 +303,17 @@ Authorization: Bearer {token}
 - Documentación generada con anotaciones Swagger `@OA`.
 - Pruebas en `tests/Feature/`.
 - SoftDeletes para registros.
+- Se implementan **Policies** en el modelo `Persona`, lo que limita el acceso a ciertos recursos. Solo el usuario dueño del registro (`user_id`) tiene permiso para ver, actualizar o eliminar sus datos.
+  - Estas políticas están configuradas en `PersonaPolicy` y aplicadas automáticamente mediante `authorizeResource(Persona::class, 'persona')` en el controlador.
 
----
+> ⚠️ **IMPORTANTE**: Para probar este comportamiento correctamente:
+>
+> 1. Autentícate con un usuario y conserva su token JWT.
+> 2. Crea una persona con ese usuario autenticado.
+> 3. Luego, intenta acceder a esa persona con otro usuario distinto (usando su propio token).
+> 4. Se generará un error `403 Forbidden`, ya que solo el propietario puede acceder/modificar ese recurso.
 
+--
 ## 🧪 Comandos útiles
 
 ```bash
