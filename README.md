@@ -10,7 +10,6 @@ API RESTful desarrollada en Laravel con autenticación JWT, documentación Swagg
 - Composer
 - Laravel >= 8.x
 - MySQL
-- Extensiones PHP: `openssl`, `pdo`, `mbstring`, `bcmath`, `xml`, `tokenizer`
 
 ---
 
@@ -40,12 +39,12 @@ Antes de ejecutar las migraciones, asegúrate de crear una base de datos en tu s
 
 CREATE DATABASE PruebaMascota CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 EXIT;
-
+### 🔧 Opción 2: crearlo desde cualquier gestor de base datos
 ---
 
 ## 🛠 Configura tu `.env` con las credenciales de base de datos
 
-Asegúrate de tener estas variables en tu archivo `.env` para que Laravel pueda conectarse correctamente a tu base de datos MySQL local.
+Asegúrate de tener estas variables en tu archivo `.env` para que Laravel pueda conectarse correctamente a tu base de datos MySQL local, colocando la el nombde de la base creada en DB_DATABASE y las credenciales de la base de datos.
 
 ### 🧾 Ejemplo:
 
@@ -79,7 +78,7 @@ php artisan serve
 
 ## 🔐 Autenticación
 
-Usamos JWT (JSON Web Token).
+Usamos JWT (JSON Web Token) de usuario creado por defecto.
 
 ### 📥 Login
 
@@ -116,10 +115,12 @@ Este `token` debe enviarse en todas las peticiones protegidas dentro del encabez
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
 ```
 
-**Ejemplo con `curl`:**
+**Ejemplo con `curl`:**  recordar colocar el Bearer que es el token proporcionado en el login y el Content-Type
 
 ```bash
-curl -X GET http://localhost:8000/api/personas   -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhb..."
+curl -X GET http://localhost:8000/api/personas \
+  -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhb..." \
+  -H "Content-Type: application/json"
 ```
 
 ---

@@ -2,9 +2,11 @@
 namespace App\Services;
 
 use App\Models\Mascota;
+use App\Models\Persona;
 use App\Repositories\MascotaRepositoryInterface;
 use App\Services\DogApiService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 
 class MascotaService
@@ -24,8 +26,17 @@ class MascotaService
         return $this->repository->find($id);
     }
 
-    public function create(array $data): Mascota
+    public function create(array $data): Mascota|JsonResponse
     {
+        $persona = Persona::withTrashed()->find($data['persona_id']);
+        
+        if (!$persona || $persona->trashed()) {
+            return response()->json([
+                'message' => 'No se puede asociar una mascota a una persona eliminada.',
+                'status_code' => 422
+            ], 422);
+        }
+    
         if (strtolower($data['especie']) === 'perro') {
             $info = $this->dogApiService->buscarRaza($data['raza']);
     
@@ -39,6 +50,7 @@ class MascotaService
     
         return $this->repository->create($data);
     }
+    
 
     public function update(Mascota $mascota, array $data): Mascota
     {

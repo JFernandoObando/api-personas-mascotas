@@ -103,11 +103,15 @@ class MascotaController extends Controller
      */
     public function store(StoreMascotaRequest $request): JsonResponse
     {
-        $mascota = $this->mascotaService->create($request->validated());
-
+        $respuesta = $this->mascotaService->create($request->validated());
+    
+        if ($respuesta instanceof JsonResponse) {
+            return $respuesta;
+        }
+    
         return response()->json([
-            'message' => 'Mascota creada correctamente',
-            'mascota' => new MascotaResource($mascota)
+            'message' => 'Mascota creada correctamente.',
+            'mascota' => new MascotaResource($respuesta)
         ], 201);
     }
 
