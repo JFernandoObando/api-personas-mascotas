@@ -44,7 +44,8 @@ EXIT;
 
 ## 🛠 Configura tu `.env` con las credenciales de base de datos
 
-Asegúrate de tener estas variables en tu archivo `.env` para que Laravel pueda conectarse correctamente a tu base de datos MySQL local, colocando la el nombde de la base creada en DB_DATABASE y las credenciales de la base de datos.
+Asegúrate de tener estas variables en tu archivo `.env` para que Laravel pueda conectarse correctamente a tu base de datos MySQL local,
+ colocando la el nombde de la base creada en DB_DATABASE y las credenciales de la base de datos.
 
 ### 🧾 Ejemplo:
 
